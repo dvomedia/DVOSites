@@ -131,6 +131,12 @@ class Model_Api extends Model_Entity_Abstract
     {
         //cannot use $this as lexical variable
         $entity = $this->_entity;
+        
+        // check it exists, may aswell bum out if the class doens't exit
+        if (false === class_exists('Model_Entity_' . ucfirst($entity))) {
+            Kohana::$log->add(Kohana_Log::DEBUG, 'Class does not exist for ' . $entity);
+            throw new Exception('Class ' . $entity . ' does not exist');
+        }
         $query  = '';
 
         // check to see if this is a search, build a query string if so.

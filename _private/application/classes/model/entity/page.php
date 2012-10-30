@@ -21,6 +21,12 @@ class Model_Entity_Page extends Model_Entity_Abstract
 							  'template' => '',
 							  'content'  => '',
 							  'slug'     => '',
+							  'special'  => '',
+							  'category_title' => '',
+							  'site_id' => '',
+							  'protected' => '',
+							  'site_title' => '',
+							  'site_url' => ''
 			                  );
 	}
 

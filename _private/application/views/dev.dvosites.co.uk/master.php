@@ -71,18 +71,25 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</a>
-				<a class="brand" href="#">Project name</a>
+				<a class="brand" href="<?php echo $siteurl; ?>"><?php echo $sitetitle; ?></a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li <?php if ($active === 'home'):?> class="active" <?php endif; ?>><a href="/">Home</a></li>
 						<li <?php if ($active === 'about'):?> class="active" <?php endif; ?>><a href="/about">About</a></li>
 						<li <?php if ($active === 'contact'):?> class="active" <?php endif; ?>><a href="/contact">Contact</a></li>
+						<li <?php if ($active === 'news'):?> class="active" <?php endif; ?>><a href="/news">News</a></li>
+						<li <?php if ($active === 'albums'):?> class="active" <?php endif; ?>><a href="/albums">Albums</a></li>
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
 		</div>
     </div>
     <div class="container">
+    	<?php
+    	$userId = $user->getId();
+    	if (false === empty($userId)) {
+    		print 'Welcome, ' . $user->getUsername() . ' <a href="/login/out">[logout]</a>';
+    	} ?>
      	<?php echo $body; ?>
     </div> <!-- /container -->
 </body>

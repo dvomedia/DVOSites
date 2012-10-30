@@ -74,11 +74,7 @@
 				<a class="brand" href="<?php echo $siteurl; ?>"><?php echo $sitetitle; ?></a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
-						<li <?php if ($active === 'home'):?> class="active" <?php endif; ?>><a href="/">Home</a></li>
-						<li <?php if ($active === 'about'):?> class="active" <?php endif; ?>><a href="/about">About</a></li>
-						<li <?php if ($active === 'contact'):?> class="active" <?php endif; ?>><a href="/contact">Contact</a></li>
-						<li <?php if ($active === 'news'):?> class="active" <?php endif; ?>><a href="/news">News</a></li>
-						<li <?php if ($active === 'albums'):?> class="active" <?php endif; ?>><a href="/albums">Albums</a></li>
+						<li <?php if ($active === 'pages'):?> class="active" <?php endif; ?>><a href="/admin/pages">Pages</a></li>
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>

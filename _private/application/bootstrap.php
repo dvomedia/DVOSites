@@ -130,6 +130,11 @@ Route::set('api', function($uri) {
 		if (false === empty($parts[2])) {
 			$id = $parts[2];
 		}
+
+		if (true === empty($parts[1])) {
+			$parts[1] = 'page';
+		}
+
 		return array(
 			'controller' => 'api_' . $parts[1],
 			'action'     => 'index',
@@ -140,12 +145,49 @@ Route::set('api', function($uri) {
 		'action'     => 'index',
 	));
 
+// Admin Route.
+Route::set('admin', function($uri) {
+		$parts = explode('/', $uri);
+		if ($parts[0] !== 'admin') {
+			return false;
+		}
+
+		$id = null;
+		if (false === empty($parts[2])) {
+			$id = $parts[2];
+		}
+
+		if (true === empty($parts[1])) {
+			$parts[1] = 'manage';
+		}
+
+		return array(
+			'controller' => 'admin_' . $parts[1],
+			'action'     => 'index',
+			'id'         => $id);
+	}, 'api(/<controller>(/<id>))')
+	->defaults(array(
+		'controller' => 'invalid',
+		'action'     => 'index',
+	));
+
+Route::set('login', 'login')
+	->defaults(array(
+		'controller' => 'login',
+		'action'     => 'index',
+	));
+
+Route::set('logout', 'login(/<out>)')
+	->defaults(array(
+		'controller' => 'login',
+		'action'     => 'logout',
+	));
+
 Route::set('slug', '(<page_slug>)')
 	->defaults(array(
 		'controller' => 'page',
 		'action'     => 'index',
 	));
-
 
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
