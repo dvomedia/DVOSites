@@ -71,7 +71,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</a>
-				<a class="brand" href="<?php echo $siteurl; ?>"><?php echo $sitetitle; ?></a>
+				<a class="brand" href="//<?php echo $siteurl; ?>"><?php echo $sitetitle; ?></a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li <?php if ($active === 'home'):?> class="active" <?php endif; ?>><a href="/">Home</a></li>
@@ -85,11 +85,16 @@
 		</div>
     </div>
     <div class="container">
-    	<?php
-    	$userId = $user->getId();
-    	if (false === empty($userId)) {
-    		print 'Welcome, ' . $user->getUsername() . ' <a href="/login/out">[logout]</a>';
-    	} ?>
+    	<div class="visible-phone">
+    		Thank you for visiting our Mobile site!
+    	</div>
+    	<div>
+	    	<?php
+	    	$userId = $user->getId();
+	    	if (false === empty($userId)) {
+	    		print 'Welcome, ' . $user->getUsername() . ' <a href="/login/out">[logout]</a>';
+	    	} ?>
+	    </div>
      	<?php echo $body; ?>
     </div> <!-- /container -->
 </body>

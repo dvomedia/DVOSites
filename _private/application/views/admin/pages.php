@@ -1,5 +1,4 @@
-<h1>List of pages</h1>
-<?php
+        <?php
 
 $tr = '';
 if (count($pages) > 0) {
@@ -14,15 +13,27 @@ if (count($pages) > 0) {
 
 ?>
 
-<table>
-	<thead>
-		<tr>
-			<th style="width: 200px">Title</th>
-			<th style="width: 200px">Slug</th>
-			<th style="width: 200px">Template</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php echo $tr; ?>	
-	</tbody>
-</table>
+<section id="global">
+	<div class="page-header">
+		<h1>List of Pages</h1>
+	</div>
+
+	
+
+	<table>
+		<thead>
+			<tr>
+				<th style="width: 200px; text-align: left;">Title</th>
+				<th style="width: 200px; text-align: left;">Slug</th>
+				<th style="width: 200px; text-align: left;">Template</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php echo $tr; ?>	
+		</tbody>
+	</table>
+
+</section>
+
+
+

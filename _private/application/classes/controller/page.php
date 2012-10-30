@@ -23,6 +23,8 @@ class Controller_Page extends Controller {
         $pageId    = $page->getId();
         $category  = $page->getCategory_Title();
         $protected = $page->getProtected();
+
+        $page->template = $page->site . '/' . $page->template;    
         if ("Y" === $protected) {
             // okay, protected page, just check we're auth'd
             $userId = $this->user->getId();
@@ -36,7 +38,7 @@ class Controller_Page extends Controller {
             $page->template = $page->site . '/default';
         } else {
             // page loaded fine.
-            $page->template = $page->site . '/' . $page->template;    
+            
 
             // any special functions?
             $params = $page->getSpecial();

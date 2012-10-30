@@ -71,7 +71,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</a>
-				<a class="brand" href="<?php echo $siteurl; ?>"><?php echo $sitetitle; ?></a>
+				<a class="brand" href="//<?php echo $siteurl; ?>"><?php echo $sitetitle; ?></a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li <?php if ($active === 'pages'):?> class="active" <?php endif; ?>><a href="/admin/pages">Pages</a></li>
@@ -80,13 +80,14 @@
 			</div>
 		</div>
     </div>
-    <div class="container">
+    <div class="container-fluid">
     	<?php
     	$userId = $user->getId();
     	if (false === empty($userId)) {
     		print 'Welcome, ' . $user->getUsername() . ' <a href="/login/out">[logout]</a>';
     	} ?>
      	<?php echo $body; ?>
+     	
     </div> <!-- /container -->
 </body>
 </html>
