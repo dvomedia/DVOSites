@@ -2,3 +2,5 @@
 _private/application/config/database.php
 _private/application/cache/
 _private/application/logs/
+
+_private/.DS_Store
