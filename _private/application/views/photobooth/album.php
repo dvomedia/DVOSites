@@ -13,7 +13,6 @@ if (count($items) > 0) {
 		$div .= '<div href="' . $url . '" class="fb-like" data-send="true" data-width="200" data-show-faces="false"></div>';
 		$div .= '</div>';
 	}
-	
+	print $div;	
 }
 
-print $div;
