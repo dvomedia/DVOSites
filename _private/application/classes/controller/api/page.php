@@ -58,6 +58,7 @@ class Controller_Api_Page extends Controller_REST
 			$ps['special']        = ($page->getSpecial() == '') ? null : $page->getSpecial();
 			$ps['site_title']     = $page->getSite_Title() ? $page->getSite_Title() : 'Project Name';
 			$ps['site_url']       = $page->getSite_Url() ? $page->getSite_Url() : '/';
+			$ps['skin']           = $page->getSkin() ? $page->getSkin() : 'default';
 			return $ps;
 		}, $this->_di['factory']->getPages($pageId, $site, $slug, $category));
 
@@ -86,16 +87,23 @@ class Controller_Api_Page extends Controller_REST
 		$callback = $this->request->query('callback');
 		
 		// parse the PUT values from the request body (none of this nasty php://input business)
-		parse_str($this->request->body(), $params);
+		$params = $this->request->post();
 
+		Kohana::$log->add(Kohana_Log::DEBUG, print_r($params, true));
+
+		$array = array();
+		if(false === $this->_di['gateway']->updatePage($params['id'], $params['site'], $params['content'])) {
+			$array = array('error' => 'NOt happening pal');
+		}
 		// create JSON
-		$json  = json_encode(sprintf('saved id (%d) whoop whoop', $params['id']));
+		
+		$json  = json_encode($array);
 
 		// convert to JSONP for cross domain / cross browser compatibilty
-		$jsonp = $callback . '(' . $json .')';
+		//$jsonp = $callback . '(' . $json .')';
 
 		// fire out the response
-		$this->response->body($jsonp);
+		$this->response->body($json);
 	}
 
 	/**

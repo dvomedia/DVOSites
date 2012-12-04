@@ -92,6 +92,9 @@ Kohana::init(array(
  */
 Kohana::$log->attach(new Log_File(APPPATH.'logs'));
 
+Kohana::$log->add(Kohana_Log::DEBUG, "\n\n\n\n\n\n\n\n\n\n\n====NEW REQUEST====");
+Kohana::$log->add(Kohana_Log::DEBUG, "\n====" . Url::base(true,true));
+
 /**
  * Attach a file reader to config. Multiple readers are supported.
  */
@@ -105,14 +108,21 @@ Kohana::modules(array(
 	'cache'     => MODPATH.'cache',      // Caching with multiple backends
     // 'codebench' => MODPATH.'codebench',  // Benchmarking tool
 	'database'  => MODPATH.'database',   // Database access
-	// 'image'     => MODPATH.'image',      // Image manipulation
+	'image'     => MODPATH.'image',      // Image manipulation
 	// 'orm'       => MODPATH.'orm',        // Object Relationship Mapping
 	// 'unittest'  => MODPATH.'unittest',   // Unit testing
 	// 'userguide' => MODPATH.'userguide',  // User guide and API documentation
 	));
 
-// Dependency injection
-require Kohana::find_file('vendor', 'pimple');
+spl_autoload_register(function ($class) {
+	$filename = APPPATH . 'vendor/' .  str_replace('\\', '/', $class) . '.php';
+	if (file_exists($filename)) {
+		require $filename;	
+	} else {
+		Kohana::$log->add(Kohana_Log::DEBUG, "FUUUUU - Can't load file: " . $filename);	
+	}
+	
+});
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
@@ -153,8 +163,14 @@ Route::set('admin', function($uri) {
 		}
 
 		$id = null;
+		$action = 'index';
+
 		if (false === empty($parts[2])) {
-			$id = $parts[2];
+			$action = $parts[2];
+		}
+
+		if (false === empty($parts[3])) {
+			$id = $parts[3];
 		}
 
 		if (true === empty($parts[1])) {
@@ -163,7 +179,7 @@ Route::set('admin', function($uri) {
 
 		return array(
 			'controller' => 'admin_' . $parts[1],
-			'action'     => 'index',
+			'action'     => $action,
 			'id'         => $id);
 	}, 'api(/<controller>(/<id>))')
 	->defaults(array(

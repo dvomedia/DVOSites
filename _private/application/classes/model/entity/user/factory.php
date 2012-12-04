@@ -38,7 +38,7 @@ class Model_Entity_User_Factory
 	 *
 	 * @return array
 	 **/
-	public function getUsers($id, $username, $password)
+	public function getUsers($id, $username, $password, $site)
 	{
 		//$page = $this->_cache->get('model.entity.page.factory.getpage.' . $id);
 
@@ -51,7 +51,7 @@ class Model_Entity_User_Factory
 				}
 				
 				return $rt;
-			}, $this->_gateway->getUsers($id, $username, $password));
+			}, $this->_gateway->getUsers($id, $username, $password, $site));
 
 			$this->_cache->set('model.entity.page.factory.getpage.' . $id, $page, DATE::WEEK);
 		}

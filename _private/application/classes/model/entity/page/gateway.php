@@ -16,7 +16,35 @@ class Model_Entity_Page_Gateway
 	public function getPages($id, $site, $slug, $category)
 	{
 		if (true === isset($id)) {
-			// get by uniq id)
+			// get by by site category
+			$exec = "SELECT
+                         p.id,
+                         p.title,
+                         p.content,
+                         p.slug,
+                         c.title as 'category_title',
+                         p.special,
+                         p.site_id,
+                         p.template,
+                         p.protected,
+                         s.title as 'site_title',
+                         s.url as 'site_url',
+                         s.skin
+			         FROM
+			             pages p
+			         INNER JOIN 
+			             sites s ON s.id = p.site_id
+			         LEFT JOIN
+			             category c ON c.id = p.category_id
+			         WHERE
+			             s.url = :site
+			             AND
+			             p.id = :id
+			         ORDER BY p.id DESC";
+			$db   = DB::query(Database::SELECT, $exec);
+			$db->param(':site', $site);
+			$db->param(':id', $id);
+
 		} elseif (true === isset($site) && true === isset($category)) {
 			// get by by site category
 			$exec = "SELECT
@@ -30,8 +58,8 @@ class Model_Entity_Page_Gateway
                          p.template,
                          p.protected,
                          s.title as 'site_title',
-                         s.url as 'site_url'
-
+                         s.url as 'site_url',
+                         s.skin
 			         FROM
 			             pages p
 			         INNER JOIN 
@@ -59,7 +87,8 @@ class Model_Entity_Page_Gateway
                          p.template,
                          p.protected,
                          s.title as 'site_title',
-                         s.url as 'site_url'
+                         s.url as 'site_url',
+                         s.skin
 			         FROM
 			             pages p
 			         INNER JOIN 
@@ -86,7 +115,8 @@ class Model_Entity_Page_Gateway
                          p.template,
                          p.protected,
                          s.title as 'site_title',
-                         s.url as 'site_url'
+                         s.url as 'site_url',
+                         s.skin
 			         FROM
 			             pages p
 			         INNER JOIN 
@@ -119,5 +149,29 @@ class Model_Entity_Page_Gateway
 		print_r($pages);
 
 		return array();
+	}
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function updatePage($id, $site, $content)
+	{
+		$exec = "UPDATE
+				     pages p
+		         INNER JOIN
+		         	sites s ON s.id = p.site_id
+		         SET
+		             p.content = :content
+		         WHERE
+		             p.id=:id and s.url=:site";
+
+		$db   = DB::query(Database::UPDATE, $exec);
+		$db->param(':id', $id);
+		$db->param(':site', $site);
+		$db->param(':content', $content);
+		return $db->execute();
 	}
 }

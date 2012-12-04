@@ -38,7 +38,7 @@ class Model_Entity_Photo_Factory
 	 *
 	 * @return array
 	 **/
-	public function getPhotos($id, $userId)
+	public function getPhotos($id, $userId, $albumId)
 	{
 		//$page = $this->_cache->get('model.entity.page.factory.getpage.' . $id);
 
@@ -51,7 +51,7 @@ class Model_Entity_Photo_Factory
 				}
 				
 				return $rt;
-			}, $this->_gateway->getPhotos($id, $userId));
+			}, $this->_gateway->getPhotos($id, $userId, $albumId));
 
 			$this->_cache->set('model.entity.page.factory.getpage.' . $id, $page, DATE::WEEK);
 		}

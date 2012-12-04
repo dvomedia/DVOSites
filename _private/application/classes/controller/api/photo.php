@@ -43,7 +43,8 @@ class Controller_Api_Photo extends Controller_REST
 	public function action_index()
 	{
 		$photoId = $this->request->param('id');
-		$userId  = $this->request->query('userId');
+		$albumId = $this->request->query('album_id');
+		$userId  = $this->request->query('user_id');
 
 		$photos = array_map(function($user) {
 			$u['id']      = $user->getId();
@@ -51,7 +52,7 @@ class Controller_Api_Photo extends Controller_REST
 			$u['url']     = $user->getUrl();
 			
 			return $u;
-		}, $this->_di['factory']->getPhotos($photoId, $userId));
+		}, $this->_di['factory']->getPhotos($photoId, $userId, $albumId));
 
 		// return just the one, not as an array.
 		if (false !== Arr::get($photos, 0, false)) {

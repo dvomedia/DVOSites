@@ -101,7 +101,8 @@ class Model_Api extends Model_Entity_Abstract
         } else {
             // okay lets try and see if there's an API to get it
             try {
-                $url  = Route::url('api') . '/' . $name . '/?' . $this->_entity . '=' . $this->_id;
+                $url  = Route::url('api') . '/' . $name . '/?' . $this->_entity . '_id' . '=' . $this->_id;
+                Kohana::$log->add(Kohana_Log::DEBUG, $name . ' - calling URL: :url', array(':url' => $url));
                 $item = array_map(function($i) use ($name) {
                     $itm = Model_Api::instance($name);
                     foreach ($i as $key => $value) {
@@ -140,14 +141,14 @@ class Model_Api extends Model_Entity_Abstract
         $query  = '';
 
         // check to see if this is a search, build a query string if so.
-        if (true === empty($this->_id)) {
+        //if (true === empty($this->_id)) {
             Kohana::$log->add(Kohana_Log::DEBUG, 'no id provided');
             $query = '?';
             if (count($this->getData() > 0)) {
                 Kohana::$log->add(Kohana_Log::DEBUG, 'doing a search with provided data (:data)', array(':data' => print_r($this->getData(), true)));
                 $query .= http_build_query($this->getData());
             }
-        }
+        //}
 
         $url    = Route::url('api') . '/' . $entity . '/' . $this->_id . $query;
         Kohana::$log->add(Kohana_Log::DEBUG, 'calling URL: :url', array(':url' => $url));
@@ -170,7 +171,7 @@ class Model_Api extends Model_Entity_Abstract
     /**
      * save the object
      *
-     * @return Model_Api
+     * @return Model_Api|string
      * @author 
      **/
     public function save()
@@ -185,16 +186,21 @@ class Model_Api extends Model_Entity_Abstract
         if (false === empty($id)) {
             $url    .= '/' . $id;
             $person  = $request($url)->method('PUT');
-            
+            Kohana::$log->add(Kohana_Log::DEBUG, 'just updating (id: ' . $id . ')');
         } else {
             $person  = $request($url)->method('POST');
+            Kohana::$log->add(Kohana_Log::DEBUG, 'ooo, no ID - nneed to create');
         }
 
         foreach ($this->getData() as $key => $value) {
             $person->post($key, $value);
         }
 
-        $person->execute();
+        $response = $person->execute();
+        $response = json_decode($response, true);
+        if (false !== Arr::get($response, 'error', false)) {
+            return $response['error'];
+        }
 
         return $this;
     }

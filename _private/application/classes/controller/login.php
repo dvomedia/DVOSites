@@ -12,6 +12,7 @@ class Controller_Login extends Controller {
         $user           = new Model_Api('user');
         $user->username = $username;
         $user->password = md5($password);
+        $user->site     = $this->siteinfo['host'];
 
         $user->load();
 

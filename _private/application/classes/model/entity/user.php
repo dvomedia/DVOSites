@@ -18,7 +18,8 @@ class Model_Entity_User extends Model_Entity_Abstract
 	{
 		$this->_data = array ('id'   => '',
 							  'username' => '',
-							  'password' => ''
+							  'password' => '',
+							  'albums' => ''
 			                  );
 	}
 

@@ -1,6 +1,13 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller extends Kohana_Controller {
+class Controller extends Kohana_Controller
+{
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 **/
+	public $siteinfo = '';
 
 	/**
 	 * Creates a new controller instance. Each controller must be constructed
@@ -20,5 +27,13 @@ class Controller extends Kohana_Controller {
 		} else {
 			$this->user = Model_Entity_User_Factory::create();	
 		}
+
+		$siteinfo  = parse_url(Url::base(true, true));
+		// horrible hacky thing - there's a much better way but cba
+        if (strpos($siteinfo['host'], 'dev.') !== false) {
+            $siteinfo['host'] = str_replace('dev.', '', $siteinfo['host']);
+        }
+
+        $this->siteinfo = $siteinfo;
 	}
 }

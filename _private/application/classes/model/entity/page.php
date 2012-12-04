@@ -26,7 +26,8 @@ class Model_Entity_Page extends Model_Entity_Abstract
 							  'site_id' => '',
 							  'protected' => '',
 							  'site_title' => '',
-							  'site_url' => ''
+							  'site_url' => '',
+							  'skin'	=> '',
 			                  );
 	}
 

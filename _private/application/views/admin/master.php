@@ -17,6 +17,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/style.css" rel="stylesheet">
 	<style type="text/css">
 		body {
 			padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -74,7 +75,15 @@
 				<a class="brand" href="//<?php echo $siteurl; ?>"><?php echo $sitetitle; ?></a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
-						<li <?php if ($active === 'pages'):?> class="active" <?php endif; ?>><a href="/admin/pages">Pages</a></li>
+						<li <?php if ($active === 'pages'):?> class="active" <?php endif; ?>>
+							<a href="/admin/pages">Pages</a>
+						</li>
+						<li <?php if ($active === 'albums'):?> class="active" <?php endif; ?>>
+							<a href="/admin/albums">Albums</a>
+						</li>
+						<li <?php if ($active === 'users'):?> class="active" <?php endif; ?>>
+							<a href="/admin/users">Users</a>
+						</li>
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>

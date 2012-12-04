@@ -11,6 +11,12 @@ class Controller_Page extends Controller {
         $siteinfo   = parse_url(Url::base(true, true));
         $page       = new Model_Api('page');
         $page->site = $siteinfo['host'];
+
+        // horrible hacky thing - there's a much better way but cba
+        if (strpos($page->site, 'dev.') !== false) {
+            $page->site = str_replace('dev.', '', $page->site);
+        }
+
         $page->slug = $this->request->param('page_slug');
 
         $slug = $page->getSlug();
@@ -24,7 +30,7 @@ class Controller_Page extends Controller {
         $category  = $page->getCategory_Title();
         $protected = $page->getProtected();
 
-        $page->template = $page->site . '/' . $page->template;    
+        $page->template = $page->skin . '/' . $page->template;    
         if ("Y" === $protected) {
             // okay, protected page, just check we're auth'd
             $userId = $this->user->getId();
@@ -35,7 +41,7 @@ class Controller_Page extends Controller {
 
         if (false === isset($pageId)) {
             // page not loaded
-            $page->template = $page->site . '/default';
+            $page->template = $page->skin . '/default';
         } else {
             // page loaded fine.
             
@@ -56,7 +62,7 @@ class Controller_Page extends Controller {
                             case 'category:photos':
                                 $special         = new Model_Api('photo');
                                 $special->site   = $page->site;
-                                $special->userId = $this->user->getId();
+                                $special->user_id = $this->user->getId();
                                 break;
                         }
                     }
@@ -69,7 +75,7 @@ class Controller_Page extends Controller {
         }
         
         // the master view
-        $master = View::factory($page->site . '/master');
+        $master = View::factory($page->skin . '/master');
         $master->title  = $page->title;
         $master->user   = $this->user;
         $master->sitetitle = $page->getSite_Title();

@@ -21,8 +21,6 @@ class Controller_Admin extends Controller
 	public function __construct(Request $request, Response $response)
 	{
 		parent::__construct($request, $response);
-
-		
 	}
 
 	/**
