@@ -58,7 +58,7 @@ class Model_Entity_User_Gateway
 			         WHERE
 			             s.url = :site
 			             OR 
-			             u.site_id = 0;
+			             u.site_id = 0
 			         ORDER BY u.id DESC";
 			$db   = DB::query(Database::SELECT, $exec);
 			$db->param(':site', $site);
