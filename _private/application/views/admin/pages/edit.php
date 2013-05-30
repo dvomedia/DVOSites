@@ -3,17 +3,14 @@ $save_message = '';
 if (true === $post) {
 	if (true === $success) {
 		$save_message .= '<div class="info success">';
-		$save_message .= 'WOOOP WOOOP';
+		$save_message .= 'Changes saved'; // WOOOP WOOOP
 	} else {
 		$save_message .= '<div class="info fail">';
-		$save_message .= 'FAIL WAIL.';
+		$save_message .= 'Errors saving changes'; // FAIL WAIL
 	}
-
-
 	$save_message .= '</div>';
 }
 ?>
-
 <section id="global">
 	<?php echo $save_message; ?>
 	<div class="page-header">
@@ -25,8 +22,6 @@ if (true === $post) {
 		<div class="row-fluid">
 			<textarea name="page[content]" style="height: 200px; width: 100%; padding: 0"><?php echo $content; ?></textarea>
 		</div>
-
 		<input class="input--submit" type="submit" value="Save" />
 	</form>
-
 </section>

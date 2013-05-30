@@ -83,4 +83,27 @@ class Controller_Admin_Pages extends Controller_Admin {
 
         $this->response->body($master);
     }
+
+
+    /**
+     * edit page
+     *
+     * @return void
+     * @author 
+     **/
+    public function action_delete()
+    {
+        $pageId  = $this->request->param('id');
+        $data    = $this->request->post('page');
+        $success = null;
+        $post    = null;
+                
+        $page       = new Model_Api('page', $pageId);
+
+        $page->delete();
+
+        // TODO: pass some form of message to user indicating success?
+
+        $this->response->headers('location', '/admin/pages');   
+    }
 }
