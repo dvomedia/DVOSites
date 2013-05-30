@@ -189,7 +189,7 @@ class Model_Api extends Model_Entity_Abstract
             Kohana::$log->add(Kohana_Log::DEBUG, 'just updating (id: ' . $id . ')');
         } else {
             $person  = $request($url)->method('POST');
-            Kohana::$log->add(Kohana_Log::DEBUG, 'ooo, no ID - nneed to create');
+            Kohana::$log->add(Kohana_Log::DEBUG, 'ooo, no ID - need to create');
         }
 
         foreach ($this->getData() as $key => $value) {

@@ -84,7 +84,8 @@ class Controller_Api_Page extends Controller_REST
 	 **/
 	public function action_update()
 	{
-		$callback = $this->request->query('callback');
+		// this used for jsonp / cross domain requests
+		// $callback = $this->request->query('callback');
 		
 		// parse the PUT values from the request body (none of this nasty php://input business)
 		$params = $this->request->post();
@@ -120,15 +121,47 @@ class Controller_Api_Page extends Controller_REST
 	}
 
 	/**
-	 * remove the entity
+	 * remove the entity (DELETE)
 	 *
 	 * @return void
 	 * @author 
 	 **/
 	public function action_delete()
 	{
+        $siteinfo   = parse_url(Url::base(true, true));
+
+		// this used for jsonp / cross domain requests
+		// $callback = $this->request->query('callback');
+		
+		// parse the PUT values from the request body (none of this nasty php://input business)
+		
+		// theres no request->post, as its a DELETE
+		// $this->request->post();
+		$params = array();
+		$params['id'] = $this->request->param('id');
+		$params['site'] = $siteinfo['host'];
+
+		Kohana::$log->add(Kohana_Log::DEBUG, print_r($params['id'], true));
+		Kohana::$log->add(Kohana_Log::DEBUG, print_r($params, true));
+
+		$array = array();
+		if(false === $this->_di['gateway']->deletePage($params['id'], $params['site'])) {
+			$array = array('error' => 'Not happening pal');
+		}
+		// create JSON
+		
+		$json  = json_encode($array);
+
+		// convert to JSONP for cross domain / cross browser compatibilty
+		//$jsonp = $callback . '(' . $json .')';
+
+		// fire out the response
+		$this->response->body($json);
+
+		/*
 		echo "deleted<br />";
 		$id = $this->request->param('id');
-		$this->response->body(json_encode(sprintf('deleted id (%d) whoop whoop', $id)));	
+		$this->response->body(json_encode(sprintf('deleted id (%d) whoop whoop', $id)));
+		*/
 	}
 }
