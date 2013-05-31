@@ -40,6 +40,8 @@ class Model_Entity_Page_Gateway
 			             s.url = :site
 			             AND
 			             p.id = :id
+			             AND
+			             p.active = 1
 			         ORDER BY p.id DESC";
 			$db   = DB::query(Database::SELECT, $exec);
 			$db->param(':site', $site);
@@ -57,6 +59,7 @@ class Model_Entity_Page_Gateway
                          p.site_id,
                          p.template,
                          p.protected,
+                         p.active,
                          s.title as 'site_title',
                          s.url as 'site_url',
                          s.skin
@@ -70,6 +73,8 @@ class Model_Entity_Page_Gateway
 			             s.url = :site
 			             AND
 			             c.title = :category
+			             AND
+			             p.active = 1
 			         ORDER BY p.id DESC";
 			$db   = DB::query(Database::SELECT, $exec);
 			$db->param(':site', $site);
@@ -86,6 +91,7 @@ class Model_Entity_Page_Gateway
                          p.site_id,
                          p.template,
                          p.protected,
+                         p.active,
                          s.title as 'site_title',
                          s.url as 'site_url',
                          s.skin
@@ -99,6 +105,8 @@ class Model_Entity_Page_Gateway
 			             s.url = :site
 			             AND
 			             p.slug = :slug
+			             AND
+			             p.active = 1
 			         LIMIT 0,1";
 			$db   = DB::query(Database::SELECT, $exec);
 			$db->param(':site', $site);
@@ -114,6 +122,7 @@ class Model_Entity_Page_Gateway
                          p.site_id,
                          p.template,
                          p.protected,
+                         p.active,
                          s.title as 'site_title',
                          s.url as 'site_url',
                          s.skin
@@ -125,6 +134,8 @@ class Model_Entity_Page_Gateway
 			             category c ON c.id = p.category_id
 			         WHERE
 			             s.url = :site
+			             AND
+			             p.active = 1
 			         LIMIT 0,10";
 			$db   = DB::query(Database::SELECT, $exec);
 			$db->param(':site', $site);
@@ -172,6 +183,29 @@ class Model_Entity_Page_Gateway
 		$db->param(':id', $id);
 		$db->param(':site', $site);
 		$db->param(':content', $content);
+		return $db->execute();
+	}
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function deletePage($id, $site)
+	{
+		$exec = "UPDATE
+				     pages p
+		         INNER JOIN
+		         	sites s ON s.id = p.site_id
+		         SET
+		             p.active = 0
+		         WHERE
+		             p.id=:id and s.url=:site";
+
+		$db   = DB::query(Database::UPDATE, $exec);
+		$db->param(':id', $id);
+		$db->param(':site', $site);
 		return $db->execute();
 	}
 }

@@ -28,6 +28,7 @@ class Model_Entity_Page extends Model_Entity_Abstract
 							  'site_title' => '',
 							  'site_url' => '',
 							  'skin'	=> '',
+							  'active'	=> '',
 			                  );
 	}
 
