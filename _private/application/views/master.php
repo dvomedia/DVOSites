@@ -78,6 +78,7 @@
 						<li <?php if ($active === 'about'):?> class="active" <?php endif; ?>><a href="/about">About</a></li>
 						<li <?php if ($active === 'contact'):?> class="active" <?php endif; ?>><a href="/contact">Contact</a></li>
 						<li <?php if ($active === 'news'):?> class="active" <?php endif; ?>><a href="/news">News</a></li>
+						<li <?php if ($active === 'md'):?> class="active" <?php endif; ?>><a href="/md">Markdown Docs</a></li>
 						<li <?php if ($active === 'albums'):?> class="active" <?php endif; ?>><a href="/albums">Albums</a></li>
 					</ul>
 				</div><!--/.nav-collapse -->
