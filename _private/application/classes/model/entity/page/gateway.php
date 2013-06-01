@@ -157,9 +157,9 @@ class Model_Entity_Page_Gateway
 			return $page;
 		}
 		*/
-		print_r($pages);
 
-		return array();
+		// print_r($pages);
+		// return array();
 	}
 
 	/**
