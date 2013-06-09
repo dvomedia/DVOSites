@@ -67,6 +67,7 @@ class Controller_Admin_Pages extends Controller_Admin {
         $view->content    = $page->content;
         $view->page_id    = $pageId;
         $view->slug       = $page->slug;
+        $view->active     = ($page->active ? 1 : 0);
         $view->post       = $post;
         $view->success    = $success;
 

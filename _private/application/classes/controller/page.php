@@ -54,6 +54,11 @@ class Controller_Page extends Controller {
                 if (true === is_array($params)) {
                     foreach ($params as $param => $value) {
                         switch ($param . ':' . $value) {
+                            case 'category:markdown':
+                                $special           = new Model_Api('page');
+                                $special->site     = $page->site;
+                                $special->category = $value;
+                                break;
                             case 'category:news':
                                 $special           = new Model_Api('page');
                                 $special->site     = $page->site;
@@ -73,13 +78,14 @@ class Controller_Page extends Controller {
                 $page->items = $special->getItems();
             }
         }
-        
+    
         // the master view
-        $master = View::factory($page->skin . '/master');
-        $master->title  = $page->title;
-        $master->user   = $this->user;
+        $master            = View::factory($page->skin . '/master');
+        $master->title     = $page->title;
+        $master->user      = $this->user;
+        $master->markdown  = true;  // flag toggles markdown.css loading
         $master->sitetitle = $page->getSite_Title();
-        $master->siteurl = '//' . $page->getSite_Url();
+        $master->siteurl   = '//' . $page->getSite_Url();
 
         if (true === isset($category)) {
             $master->active = strtolower($category);
@@ -90,7 +96,7 @@ class Controller_Page extends Controller {
         // this controller's view
         $view             = View::factory($page->template);
         $view->heading    = $page->title;
-        $view->content    = $page->content;
+        $view->content    = $page->md_render ? $page->md_content : $page->content;
         $view->items      = $page->items;
         $view->return_url = $this->request->url(); 
 
@@ -100,3 +106,4 @@ class Controller_Page extends Controller {
         $this->response->body($master);
 	}
 }
+
