@@ -22,3 +22,11 @@ input.input--submit {
 		width: 100%
 	}
 }
+
+/* markdown links - set offset to allow for fixed header menu */
+.md-anchor{
+	display: block;
+	position: relative;
+	top: -100px; /* adjust to size of heading */
+	visibility: hidden;
+}

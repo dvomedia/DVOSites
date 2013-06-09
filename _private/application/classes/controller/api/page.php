@@ -251,5 +251,5 @@ function callback_headers($match){
     $counter++;
     $id = strToLower(preg_replace('/[^a-z0-9]/i','-',$match[2])).'_'.$counter;
 
-    return '<h'.$match[1].' id="'.$id.'">'.$match[2].'</h'.$match[1].'>';
+    return '<a class="md-anchor" id="'.$id.'">a#'.$id.'</a> <h'.$match[1].' >'.$match[2].'</h'.$match[1].'>';
 }
