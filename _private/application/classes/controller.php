@@ -25,7 +25,7 @@ class Controller extends Kohana_Controller
 		if (true === isset($user)) {
 			$this->user = $user;
 		} else {
-			$this->user = Model_Entity_User_Factory::create();	
+			$this->user = Model_Entity_User_Factory::create();
 		}
 
 		$siteinfo  = parse_url(Url::base(true, true));
@@ -33,6 +33,10 @@ class Controller extends Kohana_Controller
         if (strpos($siteinfo['host'], 'dev.') !== false) {
             $siteinfo['host'] = str_replace('dev.', '', $siteinfo['host']);
         }
+
+        if (true === defined('SITE')) {
+			$siteinfo['host'] = SITE;
+		}
 
         $this->siteinfo = $siteinfo;
 	}
