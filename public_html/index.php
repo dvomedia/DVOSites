@@ -93,6 +93,9 @@ if ( ! defined('KOHANA_START_MEMORY'))
 	define('KOHANA_START_MEMORY', memory_get_usage());
 }
 
+defined('SITE')
+ || define('SITE', (getenv('SITE') ? strtolower(getenv('SITE')) : 'dvomedia.net'));
+
 // Bootstrap the application
 require APPPATH.'bootstrap'.EXT;
 

@@ -10,7 +10,7 @@ class Controller_Page extends Controller {
 	{
         $siteinfo   = parse_url(Url::base(true, true));
         $page       = new Model_Api('page');
-        $page->site = $siteinfo['host'];
+        $page->site = SITE;
 
         // horrible hacky thing - there's a much better way but cba
         if (strpos($page->site, 'dev.') !== false) {
@@ -30,7 +30,7 @@ class Controller_Page extends Controller {
         $category  = $page->getCategory_Title();
         $protected = $page->getProtected();
 
-        $page->template = $page->skin . '/' . $page->template;    
+        $page->template = $page->skin . '/' . $page->template;
         if ("Y" === $protected) {
             // okay, protected page, just check we're auth'd
             $userId = $this->user->getId();
@@ -44,7 +44,7 @@ class Controller_Page extends Controller {
             $page->template = $page->skin . '/default';
         } else {
             // page loaded fine.
-            
+
 
             // any special functions?
             $params = $page->getSpecial();
@@ -57,7 +57,7 @@ class Controller_Page extends Controller {
                             case 'category:news':
                                 $special           = new Model_Api('page');
                                 $special->site     = $page->site;
-                                $special->category = $value;    
+                                $special->category = $value;
                                 break;
                             case 'category:photos':
                                 $special         = new Model_Api('photo');
@@ -67,13 +67,13 @@ class Controller_Page extends Controller {
                         }
                     }
                 }
-                
+
                 $special->load();
 
                 $page->items = $special->getItems();
             }
         }
-        
+
         // the master view
         $master = View::factory($page->skin . '/master');
         $master->title  = $page->title;
@@ -84,7 +84,7 @@ class Controller_Page extends Controller {
         if (true === isset($category)) {
             $master->active = strtolower($category);
         } else {
-            $master->active = $page->slug;    
+            $master->active = $page->slug;
         }
 
         // this controller's view
@@ -92,9 +92,9 @@ class Controller_Page extends Controller {
         $view->heading    = $page->title;
         $view->content    = $page->content;
         $view->items      = $page->items;
-        $view->return_url = $this->request->url(); 
+        $view->return_url = $this->request->url();
 
-        // assign controller 
+        // assign controller
         $master->body = $view;
 
         $this->response->body($master);

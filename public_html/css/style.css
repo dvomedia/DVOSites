@@ -17,8 +17,15 @@ input.input--submit {
 	background-color: #F08080;
 }
 
-@media (max-width: 480px) {
+.navbar-inverse .brand {
+    display: none;
+}
+
+@media (max-width: 970px) {
 	input.input--submit {
 		width: 100%
 	}
+       .navbar-inverse .brand {
+           display: block;
+       }
 }

@@ -35,7 +35,11 @@ class Controller extends Kohana_Controller
         }
 
         if (true === defined('SITE')) {
-			$siteinfo['host'] = SITE;
+			if ($siteinfo['host'] !== SITE) {
+				header("HTTP/1.1 301 Moved Permanently");
+				header('Location: http://' . SITE);
+				exit;
+			}
 		}
 
         $this->siteinfo = $siteinfo;
