@@ -83,7 +83,7 @@ if (isset($_SERVER['KOHANA_ENV']))
 Kohana::init(array(
 	'base_url'   => '/',
 	'index_file' => false,
-	'caching'    => false,
+	'caching'    => true,
 	'profile'    => false,
 ));
 
@@ -92,8 +92,6 @@ Kohana::init(array(
  */
 Kohana::$log->attach(new Log_File(APPPATH.'logs'));
 
-Kohana::$log->add(Kohana_Log::DEBUG, "\n\n\n\n\n\n\n\n\n\n\n====NEW REQUEST====");
-Kohana::$log->add(Kohana_Log::DEBUG, "\n====" . Url::base(true,true));
 
 /**
  * Attach a file reader to config. Multiple readers are supported.
